@@ -1,8 +1,19 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { TodoModel } from './entities/TodoModel.entity';
-import { AddTodoDto } from './dto/add-todo.dto';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Version,
+} from '@nestjs/common';
+
 import { TodoService } from './todo.service';
-import { UpdateTodoDto } from './dto/update-todo.dto';
+import { AddTodoDto } from './dto/add-todo.dto';
+import { TodoModel } from './entities/TodoModel.entity';
+import { UpdateTodoDto } from './dto/update-todo.dto'; 
+
 
 @Controller('todo')
 export class TodoController {
@@ -13,12 +24,12 @@ export class TodoController {
   }
 
   @Post()
-  create(@Body() todo: AddTodoDto): TodoModel {
+  async create(@Body() todo: AddTodoDto): Promise<TodoModel> {
     return this.todoService.create(todo);
   }
 
   @Get(':id')
-  findTodoById(@Param('id') id: number): TodoModel {
+  findOne(@Param('id') id: number): TodoModel {
     return <TodoModel>this.todoService.findTodoById(id);
   }
 
